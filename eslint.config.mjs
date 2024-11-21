@@ -1,36 +1,38 @@
 import globals from 'globals';
 import pluginJs from '@eslint/js';
-import tseslint from '@typescript-eslint/eslint-plugin';
-import parser from '@typescript-eslint/parser';
+import tseslint from 'typescript-eslint';
+import prettier from 'eslint-plugin-prettier';
 
-/** @type {import('eslint').Linter.FlatConfig[]} */
 export default [
   {
     files: ['**/*.{js,mjs,cjs,ts}'],
-    ignores: ['node_modules', 'dist'], // Directly replace the .eslintignore content here
     languageOptions: {
-      globals: globals.browser,
-      parser: parser,
-    },
-    plugins: {
-      '@typescript-eslint': tseslint,
+      globals: { ...globals.browser, process: 'readonly' },
     },
     rules: {
-      ...pluginJs.configs.recommended.rules,
-      ...tseslint.configs.recommended.rules,
-      'no-console': 'warn',
-      semi: ['error', 'always'],
+      eqeqeq: 'off',
       'no-unused-vars': 'error',
-      eqeqeq: 'error',
+      'no-unused-expressions': 'error',
       'prefer-const': 'error',
+      'no-console': 'warn',
       'no-undef': 'error',
-      'prettier/prettier': ['error'],
+      'prettier/prettier': ['error', { endOfLine: 'auto' }],
     },
+    ignores: ['**/node_modules/**', '**/dist/**'],
+  },
+  {
+    files: ['**/*.js'],
     languageOptions: {
-      globals: {
-        ...globals.browser,
-        process: 'readonly', // Define additional global variables
-      },
+      sourceType: 'commonjs',
     },
+  },
+  {
+    ignores: ['node_modules/*', 'dist/*'],
+  },
+
+  pluginJs.configs.recommended,
+  ...tseslint.configs.recommended,
+  {
+    plugins: { prettier },
   },
 ];

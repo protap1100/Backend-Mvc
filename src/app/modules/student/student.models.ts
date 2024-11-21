@@ -9,9 +9,9 @@ import {
   TStudent,
   // TStudentModel,
   TUserName,
-} from './student/student-interface';
-import { boolean, object } from 'joi';
-import config from '../config';
+} from './student-interface';
+// import { boolean, object } from 'joi';
+import config from '../../config';
 
 const userNameSchema = new Schema<TUserName>({
   firstName: {
