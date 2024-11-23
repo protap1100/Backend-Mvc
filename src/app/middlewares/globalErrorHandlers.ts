@@ -1,12 +1,11 @@
-import express from 'express';
-import { Application, Request, Response, NextFunction } from 'express';
-const app: Application = express();
+import { Request, Response, NextFunction } from 'express';
 
 export const globalErrorHandler = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   error: any,
   req: Request,
   res: Response,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   next: NextFunction,
 ) => {
   const statusCode = 500;
